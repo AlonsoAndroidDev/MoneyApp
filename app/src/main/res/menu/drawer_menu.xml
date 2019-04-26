@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/itemIngreso" android:title="Ingreso"></item>
+        <item android:id="@+id/itemEgreso" android:title="Egreso"></item>
+        <item android:id="@+id/itemCategorias" android:title="Categorias"></item>
+        <item android:id="@+id/itemEstadisticas" android:title="Estadisticas"></item>
+        <item android:id="@+id/itemConfiguraciones" android:title="Configuraciones"></item>
+    </group>
+</menu>
