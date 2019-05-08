@@ -64,30 +64,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavigationView() {
 
-        myNavigationView.menu.getItem(0).isChecked=true
+        myNavigationView.menu.getItem(0).isChecked = true
 
         myNavigationView.setNavigationItemSelectedListener {
-
-            myDrawerLayout.closeDrawers()
-
-            selectedDrawerItem(it.itemId)
-
-            true
+            val itemId = it.itemId
+            selectedDrawerItem(itemId)
         }
+
+        selectedDrawerItem(R.id.itemIngreso)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            android.R.id.home -> {
-                myDrawer.openDrawer(GravityCompat.START)
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun selectedDrawerItem(item: Int): Boolean{
+    private fun selectedDrawerItem(item: Int): Boolean {
         var selectedItem = 0
 
         when (item) {
@@ -123,5 +110,16 @@ class MainActivity : AppCompatActivity() {
         val fm = supportFragmentManager.beginTransaction()
         fm.replace(frameLayout, fragment)
             .commit()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                myDrawer.openDrawer(GravityCompat.START)
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
