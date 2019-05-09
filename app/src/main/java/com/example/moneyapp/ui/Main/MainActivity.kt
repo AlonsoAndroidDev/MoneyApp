@@ -5,23 +5,21 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
-import android.view.View
-import android.widget.FrameLayout
-import android.widget.Toast
 import com.example.moneyapp.R
 import com.example.moneyapp.ui.Categoria.CategoriaFragment
 import com.example.moneyapp.ui.Configuracion.ConfiguracionFragment
 import com.example.moneyapp.ui.Egreso.EgresoFragment
 import com.example.moneyapp.ui.Estadisticas.EstadisticasFragment
 import com.example.moneyapp.ui.Ingreso.IngresoFragment
+import com.example.moneyapp.ui.Inicio.InicioFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var myDrawer: DrawerLayout
+    private lateinit var drawerLayout: DrawerLayout
 
+    private lateinit var inicioFragment: InicioFragment
     private lateinit var categoriaFragment: CategoriaFragment
     private lateinit var configuracionFragment: ConfiguracionFragment
     private lateinit var egresoFragment: EgresoFragment
@@ -33,21 +31,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initComponents()
         initToolbar()
-        initAppBar()
+        initActionBar()
         initFragments()
         initNavigationView()
     }
 
     private fun initComponents() {
-        myDrawer = myDrawerLayout
+        drawerLayout = myDrawerLayout
     }
 
     private fun initToolbar() {
-        val toolbar = toolbar
-        setSupportActionBar(toolbar)
+        val myToolbar = toolbar
+        setSupportActionBar(myToolbar)
     }
 
-    private fun initAppBar() {
+    private fun initActionBar() {
         val actionBar = supportActionBar
         actionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -55,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFragments() {
+        inicioFragment = InicioFragment()
         categoriaFragment = CategoriaFragment()
         configuracionFragment = ConfiguracionFragment()
         egresoFragment = EgresoFragment()
@@ -71,38 +70,36 @@ class MainActivity : AppCompatActivity() {
             selectedDrawerItem(itemId)
         }
 
-        selectedDrawerItem(R.id.itemIngreso)
+        selectedDrawerItem(R.id.itemInicio)
     }
 
-    private fun selectedDrawerItem(item: Int): Boolean {
-        var selectedItem = 0
+    private fun selectedDrawerItem(menuItemId: Int): Boolean {
 
-        when (item) {
+        when (menuItemId) {
+
+            R.id.itemInicio -> {
+                loadFrag(inicioFragment, R.id.frame_container)
+            }
 
             R.id.itemIngreso -> {
-                loadFrag(categoriaFragment, R.id.frame_container)
-                selectedItem = item
+                loadFrag(ingresoFragment, R.id.frame_container)
             }
             R.id.itemEgreso -> {
                 loadFrag(egresoFragment, R.id.frame_container)
-                selectedItem = item
             }
             R.id.itemEstadisticas -> {
                 loadFrag(estadisticasFragment, R.id.frame_container)
-                selectedItem = item
             }
             R.id.itemCategorias -> {
                 loadFrag(categoriaFragment, R.id.frame_container)
-                selectedItem = item
             }
             R.id.itemConfiguraciones -> {
                 loadFrag(configuracionFragment, R.id.frame_container)
-                selectedItem = item
             }
         }
 
-        myNavigationView.menu.findItem(selectedItem).isChecked = true
-        myDrawer.closeDrawers()
+        myNavigationView.menu.findItem(menuItemId).isChecked = true
+        drawerLayout.closeDrawers()
         return true
     }
 
@@ -115,7 +112,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             android.R.id.home -> {
-                myDrawer.openDrawer(GravityCompat.START)
+                drawerLayout.openDrawer(GravityCompat.START)
                 true
             }
 
